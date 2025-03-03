@@ -10,9 +10,9 @@ async function get_article() {
 
 async function render_article() {
     let template = `
-    <div class="card m-2 border-primary" style="max-width: 540px">
+    <div class="card m-2 border-primary align-items-center d-flex justify-content-center" style="max-width: 540px">
         <div class="row g-0">
-            <div class="col-md-4">
+            <div class="col-md-4 d-flex">
                 <img class="img-fluid rounded-start" src="{КАРТИНКА}" alt="Фотография">
             </div>
             <div class="col-md-8">

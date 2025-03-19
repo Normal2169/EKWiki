@@ -32,7 +32,7 @@ async function render_article() {
             .replace("{ЗАГОЛОВОК}", element.Heading)
             .replace("{ОПИСАНИЕ}", element.description)
             .replace("{КАРТИНКА}", element.picture)
-            .replace("{ДАТАСОЗДАНИЯ}", element.DCF);  
+            .replace("{ДАТАСОЗДАНИЯ}", element.dfc);  
         container.innerHTML += article;
     });
 }

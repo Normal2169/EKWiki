@@ -1,7 +1,7 @@
 from flask import Flask, Response, jsonify, request
 from flask_cors import CORS
 from sqlalchemy import create_engine, text, bindparam
-connection_string = "mysql+pymysql://admin:123@192.168.50.114:3306/article"
+connection_string = "mysql+pymysql://admin:123@192.168.0.102:3306/article"
 engine = create_engine(connection_string, echo=True)
 
 app = Flask(__name__)
@@ -19,7 +19,7 @@ def get_article():
         return jsonify(article)
     return Response(jsonify({"status": "500", "message": "Database is down!"}), status=500)
 
-@app.route("/api/article/all", methods=["POST"])
+@app.route("/api/article", methods=["POST"])
 def add_article():
     if request.method == "POST":
         form = request.form

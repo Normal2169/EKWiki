@@ -36,7 +36,7 @@
     </nav>
     <div class="container mt-2" style="min-height: 100%;">
         <div>
-            <form action="http://localhost:8000/api/article/all" method="POST">
+            <form id="article_form" method="POST">
                 <div class="form-group">
                   <label for="Heading">Заголовок</label>
                   <input name="Heading" type="text" class="form-control" id="Heading" placeholder="">
@@ -53,13 +53,11 @@
                     <label for="dfc">Дата создания</label>
                     <input name="dfc" type="text" class="form-control" id="dfc" placeholder="2025-11-11">
                 </div>
-                <input type="submit" class="btn btn-success mt-2">
               </form>
+              <button id="_button" class="btn btn-success mt-2">Редактировать</button>
         </div>
     </div>
-
-
-
+    <div class = "m-2 text-center">Пример даты "2025-14-04"</a>
+    <script src="/client/Admin/js/update.js"></script>
 </body>
-
 </html>

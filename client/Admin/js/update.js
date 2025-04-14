@@ -7,11 +7,10 @@ async function get_article(id) {
         alert("Ошибка HTTP: " + response.status)
     }
 }
-
-async function update_form(){
+async function update_form() {
     let params = new URLSearchParams(document.location.search)
     let id = params.get("id")
-    if (id == null){
+    if (id == null) {
         document.getElementById("_button").innerText = "Добавить"
         document.getElementById("_button").onclick = add_article
         return
@@ -23,8 +22,8 @@ async function update_form(){
     document.getElementById("description").value = article["description"]
     document.getElementById("picture").value = article["picture"]
     document.getElementById("dfc").value = article["dfc"]
-}
 
+}
 async function edit_article() {
     let params = new URLSearchParams(document.location.search)
     let id = params.get("id")
@@ -38,9 +37,9 @@ async function edit_article() {
         alert("Ошибка HTTP: " + response.status)
     }
 }
-
 async function add_article() {
-    let response = await fetch("http://localhost:8000/api/article/all", {
+    let response = await fetch("http://localhost:8000/api/article", 
+    {
         method: "POST",
         body: new FormData(document.getElementById("article_form"))
     })
@@ -50,5 +49,4 @@ async function add_article() {
         alert("Ошибка HTTP: " + response.status)
     }
 }
-
 update_form()

@@ -11,18 +11,22 @@ async function get_article() {
 async function render_article() {
     let template = `
     <tr>
-        <th scope="row">{ИД}</th>
+        <th scope="row" >{ИД}</th>
         <td>{ЗАГОЛОВОК}</td>
         <td>{ОПИСАНИЕ}</td>
         <td>{ДАТАСОЗДАНИЯ}</td>
         <td><img src="{КАРТИНКА}" width="75px" class="img-fluid rounded-start" alt="..."></td>
+        <td>
+        <button class="btn btn-danger me-2" onclick="delete_article({ИД})">🗑</button>
+        <a class="btn btn-warning" href="create_article.html?id={ИД}">✏️</a>
+        </td>
     </tr>`;
 
     let articles = await get_article();
     let container = document.getElementById("article");
     articles.forEach(element => {
         let article = template
-            .replace("{ИД}", element.id)
+            .replaceAll("{ИД}", element.id)
             .replace("{ЗАГОЛОВОК}", element.Heading)
             .replace("{ОПИСАНИЕ}", element.description)
             .replace("{КАРТИНКА}", element.picture)
@@ -32,3 +36,13 @@ async function render_article() {
 }
 
 render_article();
+
+async function delete_article(id) 
+{
+    let response = await fetch("http://localhost:8000/api/article/" + id, {"method": "DELETE"})
+    if (response.ok) {
+        window.location.reload();
+    } else {
+        alert("Ошибка HTTP: " + response.status)
+    }
+}

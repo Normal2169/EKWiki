@@ -1,7 +1,6 @@
 from flask import Flask, Response, jsonify, request
 from flask_cors import CORS
 from sqlalchemy import create_engine, text, bindparam
-
 connection_string = "mysql+pymysql://admin:123@192.168.50.114:3306/article"
 engine = create_engine(connection_string, echo=True)
 
@@ -32,6 +31,39 @@ def add_article():
             query = query.bindparams(bindparam("dfc", form.get("dfc")))
             result = connection.execute(query)
             connection.commit()
+            return jsonify(result.fetchone()._asdict())
+        return jsonify({"message": "Error"})
+@app.route("/api/article/<id>", methods=["DELETE","GET","PUT"])
+def delete_article(id: int):
+    if request.method == "DELETE":
+        with engine.connect() as connection:
+            query = text("DELETE FROM article WHERE id = :id")
+            query = query.bindparams(bindparam("id", id))
+            result = connection.execute(query)
+            connection.commit()
+            return jsonify({"message": "Success", "id": id})
+        return jsonify({"message": "Записи с таким id не существует"})
+    if request.method == "GET":
+        with engine.connect() as connection:
+            query = text("SELECT * FROM article WHERE id = :id")
+            query = query.bindparams(bindparam("id", id))
+            result = connection.execute(query)
+            return jsonify(result.fetchone()._asdict())
+        return jsonify({"message": "Error"})
+    if request.method == "PUT":
+        form = request.form
+        with engine.connect() as connection:
+            query = text("UPDATE article SET Heading = :Heading, description = :description, picture = :picture, dfc = :dfc WHERE id = :id")
+            query = query.bindparams(bindparam("Heading", form.get("Heading")))
+            query = query.bindparams(bindparam("description", form.get("description")))
+            query = query.bindparams(bindparam("picture", form.get("picture")))
+            query = query.bindparams(bindparam("dfc", form.get("dfc")))
+            query = query.bindparams(bindparam("id", id))
+            connection.execute(query)
+            connection.commit()
+            query = text("SELECT * FROM article WHERE id = :id")
+            query = query.bindparams(bindparam("id", id))
+            result = connection.execute(query)
             return jsonify(result.fetchone()._asdict())
         return jsonify({"message": "Error"})
 

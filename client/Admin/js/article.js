@@ -34,7 +34,7 @@ async function render_article() {
 }
 render_article();
 async function delete_article(id) 
-{
+{ // Удаление статьи по id
     let response = await fetch("http://localhost:8000/api/article/" + id, {"method": "DELETE"})
     if (response.ok) {
         window.location.reload();

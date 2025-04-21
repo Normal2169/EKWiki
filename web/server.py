@@ -1,7 +1,7 @@
 from flask import Flask, Response, jsonify, request
 from flask_cors import CORS
 from sqlalchemy import create_engine, text, bindparam
-connection_string = "mysql+pymysql://admin:123@192.168.50.114:3306/article"
+connection_string = "mysql+pymysql://admin:123@192.168.0.106:3306/article"
 engine = create_engine(connection_string, echo=True)
 
 app = Flask(__name__)
@@ -61,6 +61,17 @@ def delete_article(id: int):
             query = query.bindparams(bindparam("id", id))
             connection.execute(query)
             connection.commit()
+            query = text("SELECT * FROM article WHERE id = :id")
+            query = query.bindparams(bindparam("id", id))
+            result = connection.execute(query)
+            return jsonify(result.fetchone()._asdict())
+        return jsonify({"message": "Error"})
+
+
+@app.route("/api/article_page/<id>", methods=["GET"])
+def get_article_page(id: int):
+    if request.method == "GET":
+        with engine.connect() as connection:
             query = text("SELECT * FROM article WHERE id = :id")
             query = query.bindparams(bindparam("id", id))
             result = connection.execute(query)

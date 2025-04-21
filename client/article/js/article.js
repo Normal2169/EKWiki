@@ -17,9 +17,9 @@ async function render_article() {
             </div>
             <div class="col-md-8">
                 <div class="card-body text-center">
-                    <h5 class="card-title">{ЗАГОЛОВОК}</h5>
+                    <a href="page.html?id={ИД}" class="card-title link-body-emphasis link-offset-2 link-underline-opacity-0">{ЗАГОЛОВОК}</a>
                     <p class="card-text">{ОПИСАНИЕ}</p>
-                    <p class="card-text"><small class="text-body-secondary">Дата создания статьи: {ДАТАСОЗДАНИЯ}</small></p>
+                    <p class="card-text"><small class="text-body-secondary">Дата создания статьи:{ДАТАСОЗДАНИЯ}</small></p>
                 </div>
             </div>
         </div>
@@ -29,10 +29,11 @@ async function render_article() {
     let container = document.getElementById("article");
     articles.forEach(element => {
         let article = template
-            .replace("{ЗАГОЛОВОК}", element.Heading)
+            .replaceAll("{ЗАГОЛОВОК}", element.Heading)
             .replace("{ОПИСАНИЕ}", element.description)
             .replace("{КАРТИНКА}", element.picture)
-            .replace("{ДАТАСОЗДАНИЯ}", element.dfc);  
+            .replace("{ДАТАСОЗДАНИЯ}", element.dfc)  
+            .replaceAll("{ИД}", element.id);  
         container.innerHTML += article;
     });
 }

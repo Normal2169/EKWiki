@@ -33,8 +33,11 @@ async function edit_article() {
     })
     if (response.ok) {
         window.location = "./"
-    } else {
+    } 
+    else {
         alert("Ошибка HTTP: " + response.status)
+        alert("Ошибка")
+        
     }
 }
 async function add_article() {

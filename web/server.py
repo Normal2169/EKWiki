@@ -1,7 +1,7 @@
 from flask import Flask, Response, jsonify, request
 from flask_cors import CORS
 from sqlalchemy import create_engine, text, bindparam
-connection_string = "mysql+pymysql://admin:123@192.168.0.102:3306/article"
+connection_string = "mysql+pymysql://admin:123@192.168.50.114:3306/article"
 engine = create_engine(connection_string, echo=True)
 
 app = Flask(__name__)
